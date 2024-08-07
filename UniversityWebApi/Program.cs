@@ -1,5 +1,6 @@
 using Application;
 using Persistence;
+using RestClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceLayer(builder.Configuration);
+builder.Services.AddRestClient();
 
 var app = builder.Build();
 
