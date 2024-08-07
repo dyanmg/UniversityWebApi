@@ -12,9 +12,11 @@ namespace Persistence.Repositories
 {
     internal class Repository<T>(SchoolContext _schoolContext) : IRepository<T> where T : BaseEntity
     {
-        public Task Add(T entity)
+        public async Task Add(T entity)
         {
-            throw new NotImplementedException();
+            await _schoolContext
+                .Set<T>()
+                .AddAsync(entity);
         }
 
         public async Task<List<T>> Get(Expression<Func<T, bool>> predicate)
@@ -41,14 +43,18 @@ namespace Persistence.Repositories
                 .FindAsync(id);
         }
 
-        public Task Remove(T entity)
+        public async Task Remove(T entity)
         {
-            throw new NotImplementedException();
+            _schoolContext
+                .Set<T>()
+                .Remove(entity);
         }
 
-        public Task Update(T entity)
+        public async Task Update(T entity)
         {
-            throw new NotImplementedException();
+            _schoolContext
+                .Set<T>()
+                .Update(entity);
         }
     }
 }

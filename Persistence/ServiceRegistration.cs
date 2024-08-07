@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Application.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Persistence.Repositories;
 
 namespace Persistence
 {
@@ -12,6 +14,9 @@ namespace Persistence
         {
             services.AddSqlServer<SchoolContext>(configuration.GetConnectionString("Training"),
                 x => x.MigrationsHistoryTable("_migrationsHistory", "gufron"));
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
 

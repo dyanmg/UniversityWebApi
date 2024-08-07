@@ -1,4 +1,5 @@
 ﻿using Application.Features;
+using Domain.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UniversityWebApi.Controllers
@@ -32,6 +33,39 @@ namespace UniversityWebApi.Controllers
         {
             var result = await _courseFeature.FindByTitle(title);
             return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CourseCreateDto createDto)
+        {
+            await _courseFeature.CreateCourse(createDto);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deleted = await _courseFeature.RemoveCourseById(id);
+
+            if (!deleted)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, CourseCreateDto courseDto)
+        {
+            var course = await _courseFeature.UpdateCourseById(id, courseDto);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(course);
         }
     }
 }

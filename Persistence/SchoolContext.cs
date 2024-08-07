@@ -33,6 +33,7 @@ namespace Persistence
                 e.Property(x => x.CourseID).IsRequired();
                 e.HasOne(x => x.Student).WithMany(x => x.Enrollments).HasForeignKey(x => x.StudentID);
                 e.HasOne(x => x.Course).WithMany(x => x.Enrollments).HasForeignKey(x => x.CourseID);                
+                e.HasQueryFilter(x => x.DeletedAt == null);
             });
 
             builder.Entity<Course>(e =>
@@ -40,6 +41,7 @@ namespace Persistence
                 e.HasKey(x => x.CourseID);
                 e.Property(x => x.Title).IsRequired().HasMaxLength(512);
                 e.HasMany(x => x.Enrollments).WithOne(x => x.Course).HasForeignKey(x => x.CourseID);
+                e.HasQueryFilter(x => x.DeletedAt == null);
             });
         }
 
