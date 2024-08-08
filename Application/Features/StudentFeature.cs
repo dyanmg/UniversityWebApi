@@ -1,16 +1,13 @@
 ﻿using Application.Repositories;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Features
 {
     public class StudentFeature(IRepository<Student> _studentRepository,
         IPlaceholderUserRepository _placeholderUserRepository,
-        IUnitOfWork _unitOfWork)
+        IUnitOfWork _unitOfWork,
+        ILogger<StudentFeature> _logger)
     {
         public async Task<List<Student>> GetAllStudent()
         {
