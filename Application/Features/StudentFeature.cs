@@ -6,8 +6,7 @@ namespace Application.Features
 {
     public class StudentFeature(IRepository<Student> _studentRepository,
         IPlaceholderUserRepository _placeholderUserRepository,
-        IUnitOfWork _unitOfWork,
-        ILogger<StudentFeature> _logger)
+        IUnitOfWork _unitOfWork)
     {
         public async Task<List<Student>> GetAllStudent()
         {

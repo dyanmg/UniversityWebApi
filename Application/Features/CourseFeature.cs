@@ -1,11 +1,13 @@
 ﻿using Application.Repositories;
 using Domain.DTO;
 using Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Features
 {
     public class CourseFeature(IRepository<Course> _courseRepository,
-        IUnitOfWork _unitOfWork)
+        IUnitOfWork _unitOfWork,
+        ILogger<CourseFeature> _logger)
     {
         public async Task<List<Course>> GetAllCourse()
         {
@@ -14,7 +16,14 @@ namespace Application.Features
 
         public async Task<Course?> GetCourseById(int id)
         {
-            return await _courseRepository.GetById(id);
+            var result = await _courseRepository.GetById(id);
+
+            if (result == null)
+            {
+                _logger.LogWarning("Nonexistent course id queried!");
+            }
+
+            return result;
         }
 
         public async Task<List<Course>> FindByTitle(string name)
