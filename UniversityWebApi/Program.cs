@@ -1,8 +1,11 @@
 using Application;
+using Infra.Common;
 using Persistence;
 using RestClient;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseInfraLogging();
 
 // Add services to the container.
 
